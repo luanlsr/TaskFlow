@@ -50,61 +50,62 @@ TaskFlow follows a clean architecture approach, separating responsibilities into
 
 ## Project Structure
 
-TaskFlow
-├── Apresentation
-│   ├── TaskFlow.Api
-│   ├── Configurations
-│   ├── Controllers
-│   ├── DTOs
-│   ├── Extensions
-│   ├── Middlewares
-│   └── Properties
-├── Application
-│   ├── TaskFlow.Application
-│   ├── DTOs
-│   ├── Interfaces
-│   ├── Mappings
-│   └── UseCases
-├── CrossCutting
-│   ├── TaskFlow.CrossCutting.Logging
-│   │   ├── Loggers
-│   │   └── Configuration
-│   ├── TaskFlow.CrossCutting.IoC
-│   │   ├── Containers
-│   │   └── Configurations
-│   └── TaskFlow.CrossCutting.Utils
-│       ├── Helpers
-│       ├── Extensions
-│       └── Constants
-├── Domain
-│   ├── TaskFlow.Domain
-│   ├── Aggregates
-│   ├── Entities
-│   ├── Events
-│   ├── Exceptions
-│   ├── Interfaces
-│   └── ValueObjects
-├── Domain.Core
-│   ├── TaskFlow.Domain.Core
-│   ├── Aggregates
-│   ├── Entities
-│   ├── Events
-│   ├── Interfaces
-│   ├── Notifications
-│   └── ValueObjects
-├── Infrastructure
-│   ├── TaskFlow.Infrastructure.Data
-│   ├── AWS
-│   ├── Persistence
-│   ├── Repositories
-│   └── Services
-├── Tests
-│   ├── TaskFlow.Tests.Unit
-│   ├── TaskFlow.Tests.Integration
-│   ├── Application
-│   ├── Domain
-│   ├── Infrastructure
-│   └── Utilities
+TaskFlow  
+├── Apresentation  
+│   ├── TaskFlow.Api  
+│   ├── Configurations  
+│   ├── Controllers  
+│   ├── DTOs  
+│   ├── Extensions  
+│   ├── Middlewares  
+│   └── Properties  
+├── Application  
+│   ├── TaskFlow.Application  
+│   ├── DTOs  
+│   ├── Interfaces  
+│   ├── Mappings  
+│   └── UseCases  
+├── CrossCutting  
+│   ├── TaskFlow.CrossCutting.Logging  
+│   │   ├── Loggers  
+│   │   └── Configuration  
+│   ├── TaskFlow.CrossCutting.IoC  
+│   │   ├── Containers  
+│   │   └── Configurations  
+│   └── TaskFlow.CrossCutting.Utils  
+│       ├── Helpers  
+│       ├── Extensions  
+│       └── Constants  
+├── Domain  
+│   ├── TaskFlow.Domain  
+│   ├── Aggregates  
+│   ├── Entities  
+│   ├── Events  
+│   ├── Exceptions  
+│   ├── Interfaces  
+│   └── ValueObjects  
+├── Domain.Core  
+│   ├── TaskFlow.Domain.Core  
+│   ├── Aggregates  
+│   ├── Entities  
+│   ├── Events  
+│   ├── Interfaces  
+│   ├── Notifications  
+│   └── ValueObjects  
+├── Infrastructure  
+│   ├── TaskFlow.Infrastructure.Data  
+│   ├── AWS  
+│   ├── Persistence  
+│   ├── Repositories  
+│   └── Services  
+├── Tests  
+│   ├── TaskFlow.Tests.Unit  
+│   ├── TaskFlow.Tests.Integration  
+│   ├── Application  
+│   ├── Domain  
+│   ├── Infrastructure  
+│   └── Utilities  
+
 
 
 ## Getting Started
