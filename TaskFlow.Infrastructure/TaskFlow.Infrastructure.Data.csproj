@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="AWS\" />
     <Folder Include="Services\" />
-    <Folder Include="Repositories\" />
     <Folder Include="Persistence\" />
   </ItemGroup>
 
@@ -20,6 +19,11 @@
     <PackageReference Include="FluentNHibernate" Version="3.4.0" />
     <PackageReference Include="NHibernate" Version="5.5.2" />
     <PackageReference Include="Polly" Version="8.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaskFlow.Domain.Core\TaskFlow.Domain.Core.csproj" />
+    <ProjectReference Include="..\TaskFlow.Domain\TaskFlow.Domain.csproj" />
   </ItemGroup>
 
 </Project>

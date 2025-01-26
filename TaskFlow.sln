@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Api", "TaskFlow.Api\TaskFlow.Api.csproj", "{1D7D928E-94FF-46FD-A3D4-85E2415A5997}"
 EndProject
@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Domain", "TaskFlow
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Domain.Core", "TaskFlow.Domain.Core\TaskFlow.Domain.Core.csproj", "{451A0C62-1810-4115-96CF-711C5085E4D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Infrastructure", "TaskFlow.Infrastructure\TaskFlow.Infrastructure.csproj", "{A8F2102E-1110-4C9C-9895-342382989815}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Infrastructure.Data", "TaskFlow.Infrastructure\TaskFlow.Infrastructure.Data.csproj", "{A8F2102E-1110-4C9C-9895-342382989815}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.CrossCutting.Logging", "TaskFlow.CrossCutting.Logging\TaskFlow.CrossCutting.Logging.csproj", "{017E7B49-19C8-4ACF-9334-0C87AE04BBA5}"
 EndProject
@@ -34,6 +34,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.UnitTests", "TaskFlow.UnitTests\TaskFlow.UnitTests.csproj", "{135B0CAC-2326-4D36-A721-0F27F7581B0A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.IntegrationTests", "TaskFlow.IntegrationTests\TaskFlow.IntegrationTests.csproj", "{C5CE5E92-ACFD-4E2E-B82B-645793DD7F6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Infrastructure.Messaging", "TaskFlow.Infrastructure.Messaging\TaskFlow.Infrastructure.Messaging.csproj", "{7F0050A1-3999-4CCF-9D7D-2DEAC3FC1ECB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Infrastructure.Caching", "TaskFlow.Infrastructure.Caching\TaskFlow.Infrastructure.Caching.csproj", "{458B66E3-D960-4573-812F-46E3514F9C4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +85,14 @@ Global
 		{C5CE5E92-ACFD-4E2E-B82B-645793DD7F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5CE5E92-ACFD-4E2E-B82B-645793DD7F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5CE5E92-ACFD-4E2E-B82B-645793DD7F6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F0050A1-3999-4CCF-9D7D-2DEAC3FC1ECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F0050A1-3999-4CCF-9D7D-2DEAC3FC1ECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F0050A1-3999-4CCF-9D7D-2DEAC3FC1ECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F0050A1-3999-4CCF-9D7D-2DEAC3FC1ECB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{458B66E3-D960-4573-812F-46E3514F9C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{458B66E3-D960-4573-812F-46E3514F9C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{458B66E3-D960-4573-812F-46E3514F9C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{458B66E3-D960-4573-812F-46E3514F9C4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,5 +108,7 @@ Global
 		{6386FD5E-422C-4614-997B-93A80C959A7B} = {BDFAAE55-432B-49B1-9FAC-0CABCBE0FDEF}
 		{135B0CAC-2326-4D36-A721-0F27F7581B0A} = {0B0A91E1-FE06-4BAA-B54E-1AA83E1E7AFE}
 		{C5CE5E92-ACFD-4E2E-B82B-645793DD7F6C} = {0B0A91E1-FE06-4BAA-B54E-1AA83E1E7AFE}
+		{7F0050A1-3999-4CCF-9D7D-2DEAC3FC1ECB} = {DF2C45AB-9E90-427D-9BD8-6C7D8F3D7CA5}
+		{458B66E3-D960-4573-812F-46E3514F9C4C} = {DF2C45AB-9E90-427D-9BD8-6C7D8F3D7CA5}
 	EndGlobalSection
 EndGlobal
