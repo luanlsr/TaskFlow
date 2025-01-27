@@ -2,27 +2,24 @@ version: '3.8'
 services:
   taskflow-api:
     build:
-      context: ./Apresentation/TaskFlow.Api
+      context: ./1 - Apresentation/TaskFlow.Api
       dockerfile: Dockerfile
     ports:
       - "5000:80"
     depends_on:
-      - mysql
+      - sqlserver
       - rabbitmq
       - elasticsearch
 
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
-    ports:
-      - "3306:3306"
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: taskflow_db
-      MYSQL_USER: taskflow
-      MYSQL_PASSWORD: taskflow
+      SA_PASSWORD: "sqlserver@123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1450:1433"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - sql_data:/var/opt/mssql
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -52,5 +49,5 @@ services:
       ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
 
 volumes:
-  mysql_data:
+  sql_data:
   elasticsearch_data:

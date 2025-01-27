@@ -4,18 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskFlow.Domain.Entities;
+using TaskFlow.Domain.Core.Interfaces;
 
 namespace TaskFlow.Domain.Interfaces.Repository
 {
-    public interface IWorkItemRepository
+    public interface IWorkItemRepository : IRepository<WorkItem, Guid>
     {
-        Task<WorkItem> GetByIdAsync(Guid id);
-        Task<IEnumerable<WorkItem>> GetAllAsync();
-        Task AddAsync(WorkItem entity);
-        Task UpdateAsync(WorkItem entity);
-        Task DeleteAsync(Guid id);
-
-        Task<IEnumerable<WorkItem>> FindAsync(Func<WorkItem, bool> predicate);
-        Task<bool> ExistsAsync(Guid id);
     }
 }

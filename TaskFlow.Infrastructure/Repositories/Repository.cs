@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NHibernate;
-using NHibernate.Linq;
-using TaskFlow.Domain.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using TaskFlow.Domain.Core.Interfaces;
+using TaskFlow.Infrastructure.Data.Context;
 
 namespace TaskFlow.Infrastructure.Data.Repositories
 {
@@ -14,56 +14,57 @@ namespace TaskFlow.Infrastructure.Data.Repositories
         where TEntity : class
         where TId : struct
     {
-        private readonly ISession _session;
-
-        public Repository(ISession session)
+        private readonly DbSet<TEntity> _dataSet;
+        protected IDbFactory DbFactory
         {
-            _session = session;
+            get;
+            private set;
         }
+
+        protected AppDbContext DbContext => DbFactory.Init();
+
+        public Repository(IDbFactory dbFactory)
+        {
+            DbFactory = dbFactory;
+            _dataSet = DbContext.Set<TEntity>();
+        }
+
+        public Repository(DbContext context) => Context = context;
+
+        protected readonly DbContext Context;
 
         public TEntity Add(TEntity entity)
         {
-            using (var transaction = _session.BeginTransaction())
-            {
-                _session.Save(entity);
-                transaction.Commit();
-            }
+            _dataSet.Add(entity);
+            Context.SaveChanges();
             return entity;
         }
 
-         public async Task<TEntity> AddAsync(TEntity entity)
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
-            await _session.SaveAsync(entity);
+            await _dataSet.AddAsync(entity);
+            await Context.SaveChangesAsync();
             return entity;
         }
 
         public TEntity Update(TEntity entity)
         {
-            using (var transaction = _session.BeginTransaction())
-            {
-                _session.Update(entity);
-                transaction.Commit();
-            }
+            _dataSet.Update(entity);
+            Context.SaveChanges();
             return entity;
         }
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            using (var transaction = _session.BeginTransaction())
-            {
-                _session.Update(entity);
-                await transaction.CommitAsync();
-            }
+            _dataSet.Update(entity);
+            await Context.SaveChangesAsync();
             return entity;
         }
 
         public void Delete(TEntity entity)
         {
-            using (var transaction = _session.BeginTransaction())
-            {
-                _session.Delete(entity);
-                transaction.Commit();
-            }
+            _dataSet.Remove(entity);
+            Context.SaveChanges();
         }
 
         public async Task DeleteAsync(TId id)
@@ -71,95 +72,134 @@ namespace TaskFlow.Infrastructure.Data.Repositories
             var entity = await GetByIdAsync(id);
             if (entity != null)
             {
-                await _session.DeleteAsync(entity);
+                _dataSet.Remove(entity);
+                await Context.SaveChangesAsync();
             }
         }
 
         public bool Exists(Func<TEntity, bool> where)
         {
-            return _session.Query<TEntity>().Any(where);
+            return _dataSet.AsQueryable().Any(where);
         }
 
         public IEnumerable<TEntity> AddList(IEnumerable<TEntity> entities)
         {
-            using (var transaction = _session.BeginTransaction())
-            {
-                foreach (var entity in entities)
-                {
-                    _session.Save(entity);
-                }
-                transaction.Commit();
-            }
+            _dataSet.AddRange(entities);
+            Context.SaveChanges();
             return entities;
         }
 
         public IQueryable<TEntity> List(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _session.Query<TEntity>();
+            IQueryable<TEntity> query = _dataSet;
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
             return query;
         }
 
         public IQueryable<TEntity> ListWhere(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _session.Query<TEntity>().Where(where);
+            IQueryable<TEntity> query = _dataSet.Where(where);
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
             return query;
         }
 
         public IQueryable<TEntity> ListWhereAndSortedBy<TKey>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, TKey>> order, bool ascending = true, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _session.Query<TEntity>().Where(where);
+            IQueryable<TEntity> query = _dataSet.Where(where);
             query = ascending ? query.OrderBy(order) : query.OrderByDescending(order);
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
             return query;
         }
 
         public IQueryable<TEntity> ListSortedBy<TKey>(Expression<Func<TEntity, TKey>> order, bool ascending = true, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _session.Query<TEntity>();
+            IQueryable<TEntity> query = _dataSet;
             query = ascending ? query.OrderBy(order) : query.OrderByDescending(order);
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
             return query;
         }
 
         public TEntity GetBy(Func<TEntity, bool> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return _session.Query<TEntity>().FirstOrDefault(where);
+            IQueryable<TEntity> query = _dataSet;
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+            return query.FirstOrDefault(where);
         }
 
         public TEntity GetById(TId id, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return _session.Get<TEntity>(id);
+            IQueryable<TEntity> query = _dataSet;
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+            return query.FirstOrDefault(e => EF.Property<TId>(e, "Id").Equals(id));
         }
 
         public async Task<List<TEntity>> ListWhereAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _session.Query<TEntity>().Where(where);
+            IQueryable<TEntity> query = _dataSet.Where(where);
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
             return await query.ToListAsync();
         }
 
         public async Task<List<TEntity>> ListWhereAndSortedByAsync<TKey>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, TKey>> order, bool ascending = true, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _session.Query<TEntity>().Where(where);
+            IQueryable<TEntity> query = _dataSet.Where(where);
             query = ascending ? query.OrderBy(order) : query.OrderByDescending(order);
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
             return await query.ToListAsync();
         }
 
         public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> where)
         {
-            return await _session.Query<TEntity>().AnyAsync(where);
+            return await _dataSet.AnyAsync(where);
         }
 
         public async Task<TEntity> GetByAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return await _session.Query<TEntity>().FirstOrDefaultAsync(where);
+            IQueryable<TEntity> query = _dataSet;
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+            return await query.FirstOrDefaultAsync(where);
         }
 
         public async Task<TEntity> GetByIdAsync(TId id, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return await _session.GetAsync<TEntity>(id);
+            IQueryable<TEntity> query = _dataSet;
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+            return await query.FirstOrDefaultAsync(e => EF.Property<TId>(e, "Id").Equals(id));
         }
 
         public void Dispose()
         {
-            _session.Dispose();
+            Context.Dispose();
         }
     }
 }

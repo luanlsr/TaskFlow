@@ -18,7 +18,14 @@ namespace TaskFlow.CrossCutting.Logging.Configuration
                 {
                     AutoRegisterTemplate = true, // Cria automaticamente o template de índice no Elasticsearch
                     IndexFormat = string.Format(indexFormat, DateTime.UtcNow),
-                    FailureCallback = e => Console.WriteLine("Falha ao enviar log para o Elasticsearch: " + e.Message),
+                    FailureCallback = (logEvent, ex) => 
+                    {
+                        Console.WriteLine("Falha ao enviar log para o Elasticsearch: " + ex.Message);
+                        if (logEvent != null)
+                        {
+                            Console.WriteLine("Detalhes do LogEvent: " + logEvent.RenderMessage());
+                        }
+                    },
                     EmitEventFailure = EmitEventFailureHandling.WriteToSelfLog | EmitEventFailureHandling.WriteToFailureSink | EmitEventFailureHandling.RaiseCallback
                 })
                 .CreateLogger();

@@ -10,6 +10,7 @@ using TaskFlow.Domain.Interfaces.Repository;
 using TaskFlow.Domain.Interfaces.Service;
 using TaskFlow.Domain.Services;
 using TaskFlow.Infrastructure.Data;
+using TaskFlow.Infrastructure.Data.Context;
 using TaskFlow.Infrastructure.Data.Repositories;
 
 namespace TaskFlow.CrossCutting.IoC
@@ -31,6 +32,10 @@ namespace TaskFlow.CrossCutting.IoC
             // Loggers
             services.AddSingleton<ISerilogLoggerService, SerilogLogger>();
             services.AddSingleton<IConsoleLoggerService, ConsoleLogger>();
+
+            // Registro do repositório genérico
+            services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+            services.AddScoped<IDbFactory, DbFactory>();
 
             return services;
 

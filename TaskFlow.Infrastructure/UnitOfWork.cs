@@ -1,43 +1,42 @@
-﻿using NHibernate;
-using TaskFlow.Domain.Core.Interfaces;
-using System;
+﻿using System;
 using System.Threading.Tasks;
-using Polly;
-using TaskFlow.Infrastructure.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using TaskFlow.Domain.Core.Interfaces;
 using TaskFlow.Domain.Interfaces.Repository;
+using TaskFlow.Infrastructure.Data.Context;
 
 namespace TaskFlow.Infrastructure.Data
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly ISession _session;
-        private ITransaction _transaction;
-        public IWorkItemRepository WorkItemRepository { get; }
+        private readonly AppDbContext _context;
+        private IDbContextTransaction _transaction;
 
-        public UnitOfWork(ISession session)
+        public UnitOfWork(AppDbContext context, IWorkItemRepository workItemRepository)
         {
-            _session = session;
-            _transaction = null;
-
-            WorkItemRepository = new WorkItemRepository(session);
+            _context = context;
+            WorkItemRepository = workItemRepository;
         }
+
+        public IWorkItemRepository WorkItemRepository { get; }
 
         public async Task BeginTransactionAsync()
         {
             if (_transaction == null)
             {
-                _transaction = _session.BeginTransaction();
+                _transaction = await _context.Database.BeginTransactionAsync();
             }
         }
 
-        // Confirma a transação
         public async Task CommitAsync()
         {
-            if (_transaction == null || !_transaction.IsActive)
+            if (_transaction == null)
                 throw new InvalidOperationException("No active transaction found.");
 
             try
             {
+                await _context.SaveChangesAsync();
                 await _transaction.CommitAsync();
             }
             catch (Exception)
@@ -47,36 +46,30 @@ namespace TaskFlow.Infrastructure.Data
             }
         }
 
-        // Reverte a transação
         public async Task RollbackAsync()
         {
-            if (_transaction != null && _transaction.IsActive)
+            if (_transaction != null)
             {
                 await _transaction.RollbackAsync();
+                _transaction.Dispose();
+                _transaction = null;
             }
         }
 
-        // Verifica se existe uma transação ativa
         public bool HasActiveTransaction()
         {
-            return _transaction != null && _transaction.IsActive;
+            return _transaction != null;
         }
 
-        // Salva as alterações (para NHibernate, este é um commit de mudanças)
         public async Task SaveChangesAsync()
         {
-            if (_transaction == null || !_transaction.IsActive)
-                throw new InvalidOperationException("No active transaction found.");
-
-            // O SaveChanges no NHibernate seria equivalente ao flush
-            await _session.FlushAsync();
+            await _context.SaveChangesAsync();
         }
 
-        // Dispose para garantir que qualquer recurso da sessão ou transação seja liberado
         public void Dispose()
         {
             _transaction?.Dispose();
-            _session?.Dispose();
+            _context?.Dispose();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TaskFlow.CrossCutting.Logging.Interfaces;
+using TaskFlow.Domain.Core;
 
 namespace TaskFlow.CrossCutting.Logging
 {

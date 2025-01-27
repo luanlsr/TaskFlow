@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace TaskFlow.Domain.Entities
 {
-    public class User
+    public class ApplicationUser : IdentityUser
     {
+        public string Name { get; set; }
     }
+
 }

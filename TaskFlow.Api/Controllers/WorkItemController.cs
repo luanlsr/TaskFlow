@@ -7,11 +7,13 @@ using TaskFlow.Domain.Interfaces.Service;
 using TaskFlow.Application.UseCases.Commands;
 using TaskFlow.Application.UseCases.Queries;
 using TaskFlow.CrossCutting.Logging.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TaskFlow.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class WorkItemController : ControllerBase
     {
         private readonly IMediator _mediator;

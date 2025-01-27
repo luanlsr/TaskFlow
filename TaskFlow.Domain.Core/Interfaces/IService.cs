@@ -8,7 +8,7 @@ namespace TaskFlow.Domain.Core.Interfaces
         Task<IEnumerable<T>> GetAllAsync();
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(T entity);
 
         Task<IEnumerable<T>> FindAsync(Func<T, bool> predicate);
         Task<bool> ExistsAsync(Guid id);

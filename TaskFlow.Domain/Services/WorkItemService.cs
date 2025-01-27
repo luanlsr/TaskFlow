@@ -11,90 +11,56 @@ namespace TaskFlow.Domain.Services
 {
     public class WorkItemService : IWorkItemService
     {
-        private readonly IWorkItemRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public WorkItemService(IWorkItemRepository repository)
+        public WorkItemService(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task<WorkItem> GetByIdAsync(Guid id)
+        public Task AddAsync(WorkItem entity)
         {
-            var item = await _repository.GetByIdAsync(id);
-            if (item == null)
-            {
-                // Exemplo de exceção, se desejar
-                throw new WorkItemNotFoundException(id);
-            }
-            return item;
+            return _unitOfWork.WorkItemRepository.AddAsync(entity);
         }
 
-        public async Task<IEnumerable<WorkItem>> GetAllAsync()
+        public Task DeleteAsync(WorkItem workItem)
         {
-            return await _repository.GetAllAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task AddAsync(WorkItem entity)
+        public Task<bool> ExistsAsync(Guid id)
         {
-            // Exemplo de qualquer lógica de validação antes de inserir
-            await ValidateAsync(entity);
-
-            // Ajuste de data, se necessário
-            entity.UpdatedAt = DateTime.Now;
-
-            await _repository.AddAsync(entity);
+            throw new NotImplementedException();
         }
 
-        public async Task UpdateAsync(WorkItem entity)
+        public Task<IEnumerable<WorkItem>> FindAsync(Func<WorkItem, bool> predicate)
         {
-            // Exemplo de qualquer lógica de validação antes de atualizar
-            await ValidateAsync(entity);
-
-            entity.UpdatedAt = DateTime.Now;
-
-            await _repository.UpdateAsync(entity);
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public Task<IEnumerable<WorkItem>> GetAllAsync()
         {
-            // Você pode querer verificar se existe antes de deletar
-            var exists = await _repository.ExistsAsync(id);
-            if (!exists)
-            {
-                throw new WorkItemNotFoundException(id);
-            }
-            await _repository.DeleteAsync(id);
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<WorkItem>> FindAsync(Func<WorkItem, bool> predicate)
+        public Task<WorkItem> GetByIdAsync(Guid id)
         {
-            // Atenção: se estiver usando NHibernate/EF, esse predicate será executado em memória.
-            // Uma alternativa seria expor Expressions, mas depende do design do repositório.
-            return await _repository.FindAsync(predicate);
+            throw new NotImplementedException();
         }
 
-        public async Task<bool> ExistsAsync(Guid id)
+        public Task MarkAsCompletedAsync(Guid id)
         {
-            return await _repository.ExistsAsync(id);
+            throw new NotImplementedException();
         }
 
-        public async Task ValidateAsync(WorkItem entity)
+        public Task UpdateAsync(WorkItem entity)
         {
-            // Aqui, você pode colocar qualquer regra de negócio que 
-            // precise ser verificada antes de persistir. Ex.:
-            if (string.IsNullOrWhiteSpace(entity.Title))
-                throw new InvalidWorkItemOperationException("Title cannot be empty.");
-
-            // Exemplo de validação que deve ser async? Ajuste conforme necessidade
-            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
-        // Exemplo de método de domínio específico da IWorkItemService
-        public async Task MarkAsCompletedAsync(Guid id)
+        public Task ValidateAsync(WorkItem entity)
         {
-            var item = await GetByIdAsync(id);
-            item.MarkAsCompletedAsync(); // Supondo que WorkItem tenha esse método
-            await UpdateAsync(item);
+            throw new NotImplementedException();
         }
     }
 }
