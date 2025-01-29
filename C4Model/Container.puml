@@ -1,0 +1,25 @@
+@startuml C4_Container_Diagram
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Diagrama de Containers - TaskFlow
+
+Person(user, "Usuário", "Interage com o sistema para gerenciar tarefas.")
+Person(developer, "Desenvolvedor", "Desenvolve e mantém o sistema.")
+
+System_Boundary(taskflow_system, "TaskFlow") {
+    Container(taskflow_frontend, "TaskFlow Frontend", "Angular", "Interface para gerenciar tarefas.")
+    Container(taskflow_api, "TaskFlow API", "ASP.NET Core", "Prover APIs para gerenciar tarefas e integrações.")
+    Container(database, "Banco de Dados", "SQL Server", "Armazena dados das tarefas e usuários.")
+    Container(message_broker, "Message Broker", "RabbitMQ", "Facilita comunicação assíncrona entre serviços.")
+    Container(aws_services, "AWS Services", "S3, SQS", "Serviços de armazenamento e mensageria.")
+    Container(ci_cd_pipeline, "CI/CD Pipeline", "Jenkins", "Realiza build, teste e deploy do sistema.")
+}
+
+Rel(user, taskflow_frontend, "Interage para gerenciar tarefas.")
+Rel(taskflow_frontend, taskflow_api, "Faz requisições HTTP para a API.")
+Rel(taskflow_api, database, "Realiza operações CRUD.")
+Rel(taskflow_api, message_broker, "Publica eventos de mensageria.")
+Rel(taskflow_api, aws_services, "Integra com serviços de armazenamento e mensageria.")
+Rel(developer, ci_cd_pipeline, "Submete código para integração contínua.")
+Rel(message_broker, taskflow_api, "Processa mensagens assíncronas.")
+@enduml

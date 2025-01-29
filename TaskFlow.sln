@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Api", "TaskFlow.Api\TaskFlow.Api.csproj", "{1D7D928E-94FF-46FD-A3D4-85E2415A5997}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Api", "src\TaskFlow.Api\TaskFlow.Api.csproj", "{1D7D928E-94FF-46FD-A3D4-85E2415A5997}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Application", "TaskFlow.Application\TaskFlow.Application.csproj", "{C0A7340C-C367-4557-8B79-4667664E6DD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Application", "src\TaskFlow.Application\TaskFlow.Application.csproj", "{C0A7340C-C367-4557-8B79-4667664E6DD9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Apresentation", "1 - Apresentation", "{B4E6F623-0DBD-4AA5-8A9E-D92C60F9EDBE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Presentation", "1 - Presentation", "{B4E6F623-0DBD-4AA5-8A9E-D92C60F9EDBE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{F1A5AE9B-C0BD-4BA4-805C-F9A3776B10DC}"
 EndProject
@@ -17,23 +17,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infrastructure", "4 - I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - CrossCutting", "5 - CrossCutting", "{BDFAAE55-432B-49B1-9FAC-0CABCBE0FDEF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7 - Tests", "7 - Tests", "{0B0A91E1-FE06-4BAA-B54E-1AA83E1E7AFE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Tests", "6 - Tests", "{0B0A91E1-FE06-4BAA-B54E-1AA83E1E7AFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Domain", "TaskFlow.Domain\TaskFlow.Domain.csproj", "{79F7E824-F270-45AC-9D7E-F095C7D1DFC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Domain", "src\TaskFlow.Domain\TaskFlow.Domain.csproj", "{79F7E824-F270-45AC-9D7E-F095C7D1DFC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Domain.Core", "TaskFlow.Domain.Core\TaskFlow.Domain.Core.csproj", "{451A0C62-1810-4115-96CF-711C5085E4D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Domain.Core", "src\TaskFlow.Domain.Core\TaskFlow.Domain.Core.csproj", "{451A0C62-1810-4115-96CF-711C5085E4D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Infrastructure.Data", "TaskFlow.Infrastructure\TaskFlow.Infrastructure.Data.csproj", "{A8F2102E-1110-4C9C-9895-342382989815}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Infrastructure.Data", "src\TaskFlow.Infrastructure\TaskFlow.Infrastructure.Data.csproj", "{A8F2102E-1110-4C9C-9895-342382989815}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.CrossCutting.Logging", "TaskFlow.CrossCutting.Logging\TaskFlow.CrossCutting.Logging.csproj", "{017E7B49-19C8-4ACF-9334-0C87AE04BBA5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.CrossCutting.Logging", "src\TaskFlow.CrossCutting.Logging\TaskFlow.CrossCutting.Logging.csproj", "{017E7B49-19C8-4ACF-9334-0C87AE04BBA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.CrossCutting.IoC", "TaskFlow.CrossCutting.IoC\TaskFlow.CrossCutting.IoC.csproj", "{6BF41D50-A242-4737-B191-5E674EEB1367}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.CrossCutting.IoC", "src\TaskFlow.CrossCutting.IoC\TaskFlow.CrossCutting.IoC.csproj", "{6BF41D50-A242-4737-B191-5E674EEB1367}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.CrossCutting.Utils", "TaskFlow.CrossCutting.Utils\TaskFlow.CrossCutting.Utils.csproj", "{6386FD5E-422C-4614-997B-93A80C959A7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.CrossCutting.Utils", "src\TaskFlow.CrossCutting.Utils\TaskFlow.CrossCutting.Utils.csproj", "{6386FD5E-422C-4614-997B-93A80C959A7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Infrastructure.Messaging", "TaskFlow.Infrastructure.Messaging\TaskFlow.Infrastructure.Messaging.csproj", "{7F0050A1-3999-4CCF-9D7D-2DEAC3FC1ECB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Infrastructure.Messaging", "src\TaskFlow.Infrastructure.Messaging\TaskFlow.Infrastructure.Messaging.csproj", "{7F0050A1-3999-4CCF-9D7D-2DEAC3FC1ECB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Infrastructure.Caching", "TaskFlow.Infrastructure.Caching\TaskFlow.Infrastructure.Caching.csproj", "{458B66E3-D960-4573-812F-46E3514F9C4C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Infrastructure.Caching", "src\TaskFlow.Infrastructure.Caching\TaskFlow.Infrastructure.Caching.csproj", "{458B66E3-D960-4573-812F-46E3514F9C4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Test.UnitTest", "test\TaskFlow.Test.UnitTest\TaskFlow.Test.UnitTest.csproj", "{50F851B4-AB75-45C7-8882-B94EE998072D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{458B66E3-D960-4573-812F-46E3514F9C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{458B66E3-D960-4573-812F-46E3514F9C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{458B66E3-D960-4573-812F-46E3514F9C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50F851B4-AB75-45C7-8882-B94EE998072D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50F851B4-AB75-45C7-8882-B94EE998072D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50F851B4-AB75-45C7-8882-B94EE998072D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50F851B4-AB75-45C7-8882-B94EE998072D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,5 +102,6 @@ Global
 		{6386FD5E-422C-4614-997B-93A80C959A7B} = {BDFAAE55-432B-49B1-9FAC-0CABCBE0FDEF}
 		{7F0050A1-3999-4CCF-9D7D-2DEAC3FC1ECB} = {DF2C45AB-9E90-427D-9BD8-6C7D8F3D7CA5}
 		{458B66E3-D960-4573-812F-46E3514F9C4C} = {DF2C45AB-9E90-427D-9BD8-6C7D8F3D7CA5}
+		{50F851B4-AB75-45C7-8882-B94EE998072D} = {0B0A91E1-FE06-4BAA-B54E-1AA83E1E7AFE}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,38 @@
+@startuml C4_Component_Diagram
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Diagrama de Componentes - TaskFlow API
+
+Container_Boundary(taskflow_api, "TaskFlow API") {
+    Component(auth_controller, "AuthController", "Controller", "Gerencia autenticação de usuários.")
+    Component(workitem_controller, "WorkItemController", "Controller", "Gerencia operações de WorkItems.")
+    
+    Component(create_handler, "CreateWorkItemHandler", "Handler", "Lida com a criação de WorkItems.")
+    Component(update_handler, "UpdateWorkItemHandler", "Handler", "Lida com a atualização de WorkItems.")
+    
+    Component(commands, "Commands", "Application", "Comandos de criação, atualização e deleção de WorkItems.")
+    Component(queries, "Queries", "Application", "Consultas para obter WorkItems.")
+    
+    Component(workitem_dto, "WorkItemDTO", "DTO", "Transfere dados entre camadas.")
+    Component(workitem_entity, "WorkItem", "Domain Entity", "Representa a entidade WorkItem no domínio.")
+    
+    Component(repository, "Repository", "Infrastructure", "Interage com o banco de dados para persistência de dados.")
+    Component(cache, "Cache", "Infrastructure", "Sistema de caching usando Redis (futuro).")
+    Component(message_broker, "Message Broker", "Infrastructure", "Sistema de mensageria usando RabbitMQ (futuro).")
+}
+
+Rel(auth_controller, workitem_controller, "Pode interagir para autorização.")
+Rel(workitem_controller, create_handler, "Invoca para criar um WorkItem.")
+Rel(workitem_controller, update_handler, "Invoca para atualizar um WorkItem.")
+Rel(workitem_controller, queries, "Invoca para consultas de WorkItems.")
+Rel(create_handler, commands, "Usa o comando CreateWorkItemCommand.")
+Rel(update_handler, commands, "Usa o comando UpdateWorkItemCommand.")
+Rel(create_handler, workitem_dto, "Recebe dados do DTO.")
+Rel(update_handler, workitem_dto, "Recebe dados do DTO.")
+Rel(queries, workitem_dto, "Retorna dados do DTO.")
+Rel(create_handler, workitem_entity, "Manipula dados de WorkItem.")
+Rel(update_handler, workitem_entity, "Manipula dados de WorkItem.")
+Rel(queries, repository, "Consulta dados para consultas.")
+Rel(repository, cache, "Busca ou salva no cache (futuro).")
+Rel(repository, message_broker, "Publica mensagens no RabbitMQ (futuro).")
+@enduml

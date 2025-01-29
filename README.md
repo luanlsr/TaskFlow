@@ -41,6 +41,7 @@ TaskFlow follows a clean architecture approach, separating responsibilities into
 - **xUnit**: Unit testing framework.
 - **FluentAssertions**: For expressive and readable assertions.
 - **NSubstitute**: Mocking library for testing dependencies.
+- **AutoFixture**: Mocking library for testing dependencies.
 - **FizzWare**: Test data generation.
 
 ### CI/CD
@@ -52,7 +53,7 @@ TaskFlow follows a clean architecture approach, separating responsibilities into
 
 TaskFlow  
 ├── Apresentation  
-│   ├── TaskFlow.Api  
+│   ├── TaskFlow.Api
 │   ├── Configurations  
 │   ├── Controllers  
 │   ├── DTOs  

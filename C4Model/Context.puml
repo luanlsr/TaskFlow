@@ -1,0 +1,20 @@
+@startuml C4_Context_Diagram
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title Diagrama de Contexto - TaskFlow
+
+Person(user, "Usuário", "Interage com o sistema para gerenciar tarefas.")
+Person(developer, "Desenvolvedor", "Desenvolve e mantém o sistema.")
+
+System_Boundary(taskflow_system, "TaskFlow") {
+    System(taskflow, "TaskFlow", "Sistema para gerenciar tarefas e notificações.")
+    System_Ext(aws_services, "AWS Services", "Armazenamento e mensageria.")
+    System_Ext(database, "Banco de Dados", "Armazena dados das tarefas.")
+}
+
+Rel(user, taskflow, "Interage para gerenciar tarefas e acompanhar status.")
+Rel(developer, taskflow, "Desenvolve e mantém o sistema.")
+Rel(taskflow, aws_services, "Usa para armazenamento e mensageria.")
+Rel(taskflow, database, "Armazena e consulta dados de tarefas.")
+
+@enduml

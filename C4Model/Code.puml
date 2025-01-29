@@ -1,0 +1,85 @@
+@startuml C4_Code_Diagram
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Code.puml
+
+title Diagrama de Código - Gerenciamento de WorkItems
+
+Component_Boundary(workitem_management, "Gerenciamento de WorkItems") {
+    class WorkItemController {
+        + GetById(id: Guid): WorkItemDTO
+        + GetAll(): List<WorkItemDTO>
+        + Create(command: CreateWorkItemCommand): void
+        + Update(command: UpdateWorkItemCommand): void
+    }
+
+    class CreateWorkItemHandler {
+        + Handle(command: CreateWorkItemCommand): void
+    }
+
+    class UpdateWorkItemHandler {
+        + Handle(command: UpdateWorkItemCommand): void
+    }
+
+    class CreateWorkItemCommand {
+        + Title: string
+        + Description: string
+        + DueDate: DateTime
+    }
+
+    class UpdateWorkItemCommand {
+        + Id: Guid
+        + Title: string
+        + Description: string
+        + DueDate: DateTime
+    }
+
+    class WorkItemQuery {
+        + GetById(id: Guid): WorkItemDTO
+        + GetAll(): List<WorkItemDTO>
+    }
+
+    class WorkItemDTO {
+        + Id: Guid
+        + Title: string
+        + Description: string
+        + DueDate: DateTime
+        + Status: string
+    }
+
+    class WorkItem {
+        + Id: Guid
+        + Title: string
+        + Description: string
+        + DueDate: DateTime
+        + Status: string
+    }
+
+    class IRepository {
+        + Save(entity: T): void
+        + Update(entity: T): void
+        + GetById(id: Guid): T
+        + GetAll(): List<T>
+    }
+
+    class RedisCache {
+        + Get(key: string): object
+        + Set(key: string, value: object, expiration: TimeSpan): void
+    }
+
+    class RabbitMQPublisher {
+        + Publish(message: string): void
+    }
+}
+
+WorkItemController --> CreateWorkItemHandler : Invoca
+WorkItemController --> UpdateWorkItemHandler : Invoca
+WorkItemController --> WorkItemQuery : Invoca para consultas
+WorkItemQuery --> IRepository : Consulta dados
+CreateWorkItemHandler --> CreateWorkItemCommand : Recebe
+UpdateWorkItemHandler --> UpdateWorkItemCommand : Recebe
+CreateWorkItemHandler --> WorkItem : Cria
+UpdateWorkItemHandler --> WorkItem : Atualiza
+WorkItemQuery --> WorkItemDTO : Retorna
+WorkItemController --> WorkItemDTO : Usa
+IRepository --> RedisCache : Interage
+IRepository --> RabbitMQPublisher : Publica mensagens
+@enduml
